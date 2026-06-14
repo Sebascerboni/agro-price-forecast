@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.core.model_registry import (
@@ -100,3 +101,6 @@ def create_prediction(request: PredictionRequest):
 @app.post("/predict/compare", response_model=ComparePredictionResponse)
 def compare_prediction_models(request: ComparePredictionRequest):
     return compare_predictions(request)
+
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
